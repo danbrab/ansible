@@ -1,0 +1,24 @@
+---
+
+- name: Install composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/var/www/html/adb_webapp --filename=composer.phar
+  args:
+    creates: /var/www/html/adb_webapp/composer.phar
+
+- name: Install composer.phar
+  become: true
+  shell: /usr/bin/php composer.phar install
+  args:
+    chdir: /var/www/html/adb_webapp/
+
+- name: Move Composer globally
+  become: true
+  command: mv /var/www/html/adb_webapp/composer.phar /usr/local/bin/composer
+
+- name: Set permissions on Composer
+  become: true
+  file:
+    path: /usr/local/bin/composer
+    mode: "a+x"
+
+- debug: msg="Composer has been installed"

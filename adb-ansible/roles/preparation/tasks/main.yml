@@ -1,0 +1,56 @@
+---
+
+- name: Update APT package manager repositories cache
+  become: true
+  apt:
+    update_cache: yes
+   
+- name: Upgrade installed packages
+  become: true
+  apt:
+    upgrade: safe
+
+- name: Install utilities with apt
+  become: true
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - zip
+    - unzip
+    - pdftk
+    - curl
+    - texlive-latex-base
+    - texlive-extra-utils
+    - python-psycopg2
+    - python-gdal
+    - gdal-bin
+    - python-pip
+    - libxrender1
+    - mcrypt
+    - sqlite3
+    - python-mysqldb
+    - python-psycopg2
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
+    - postgis
+    - postgresql-9.5-plr
+    - mysql-server
+    - libapache2-mod-php
+
+- name: Install with pip
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - paramiko
+    - gsconfig
+    - django<2
+    - djangorestframework
+    - pygments
+
+- name: Install Git
+  become: true
+  apt:
+    name: git
+    state: latest
+

@@ -1,0 +1,46 @@
+---
+
+- name: Get updated files from git repository
+  git:
+    repo: "https://{{ githubuser | urlencode }}:{{ githubpassword }}@github.com/atenekom/adb_webapp.git"
+    dest: /var/www/html/adb_webapp
+
+- name: Create directory /home/ansible/scripts
+  file:
+    path: /home/ansible/scripts
+    state: directory
+    owner: ansible
+    group: ansible
+    mode: 0777
+    recurse: yes
+
+- name: Clean home path
+  shell: /bin/rm -rf /home/ansible/scripts/*
+
+- name: Create directory /home/ansible/scripts/geoexif
+  file:
+    path: /home/ansible/scripts/geoexif
+    state: directory
+    owner: ansible
+    group: ansible
+    mode: 0777
+    recurse: yes
+
+- name: Get geoexif from git repository
+  git:
+    repo: "https://{{ githubuser | urlencode }}:{{ githubpassword }}@github.com/atenekom/geoexif_adb.git"
+    dest: /home/ansible/scripts/geoexif
+
+- name: Create directory /home/ansible/scripts/adb_sql
+  file:
+    path: /home/ansible/scripts/adb_sql
+    state: directory
+    owner: ansible
+    group: ansible
+    mode: 0777
+    recurse: yes
+
+- name: Get adb_sql from git repository
+  git:
+    repo: "https://{{ githubuser | urlencode }}:{{ githubpassword }}@github.com/atenekom/adb_sql.git"
+    dest: /home/ansible/scripts/adb_sql

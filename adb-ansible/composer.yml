@@ -1,0 +1,7 @@
+---
+- hosts: adb-server
+  remote_user: ansible 
+  become: false
+  gather_facts: yes
+  roles:
+    - composer

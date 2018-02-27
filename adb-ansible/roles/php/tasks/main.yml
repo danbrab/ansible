@@ -1,0 +1,26 @@
+---
+
+- name: Update APT package manager repositories cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install PHP packages
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - php
+    - php-xml
+    - php-gd
+    - php-curl
+    - php-cli
+    - php-fpm
+    - php-intl
+    - php-mysql
+    - php-mbstring
+    - php-mcrypt
+    - php-pgsql
+    - php-zip
+

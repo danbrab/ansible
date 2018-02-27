@@ -1,0 +1,2 @@
+[adb-server]
+adb ansible_ssh_host=10.0.2.18

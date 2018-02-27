@@ -1,0 +1,67 @@
+---
+
+- name: Add parameters.yml
+  template: src=../templates/parameters.tpl dest=/var/www/html/adb_webapp/app/config/parameters.yml
+
+- name: Add config.js
+  template: src=../templates/config-js.tpl dest=/var/www/html/adb_webapp/src/Atene/AusschreibbungsBundle/Resources/public/js/config.js
+
+- name: Create directory /var/www/html/adb_webapp/foerdermittel
+  file:
+    path: /var/www/html/adb_webapp/foerdermittel
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+    recurse: yes
+
+- name: Create directory /var/www/html/adb_webapp/gewerbefoerdermittel
+  file:
+    path: /var/www/html/adb_webapp/gewerbefoerdermittel
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+    recurse: yes
+
+- name: Create directory /var/www/html/adb_webapp/areas
+  file:
+    path: /var/www/html/adb_webapp/areas
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+    recurse: yes
+
+- name: Create directory /var/www/html/adb_webapp/cells
+  file:
+    path: /var/www/html/adb_webapp/cells
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+    recurse: yes
+
+- name: Make
+  become: true  
+  shell: make
+  args:
+    chdir: /var/www/html/adb_webapp/
+
+- name: git config core.fileMode 
+  become: true
+  shell: git config core.fileMode false
+  args:
+    chdir: /var/www/html/adb_webapp/
+
+- name: Edit directory /var/www/html/adb_webapp/app
+  file:
+    path: /var/www/html/adb_webapp/app
+    mode: 0777
+    recurse: yes
+
+- name: GeoExif starten
+  become: true
+  shell: python manage.py runserver >/dev/null 2>&1 &
+  args:
+    chdir: /home/ansible/scripts/geoexif/

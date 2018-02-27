@@ -1,0 +1,8 @@
+---
+- hosts: adb-server
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  roles:
+    - php
