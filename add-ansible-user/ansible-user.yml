@@ -1,0 +1,25 @@
+---
+- hosts: SERVER-GROUP
+  remote_user: USER
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+  - name: create ansible user
+    user:
+      name: ansible
+      shell: /bin/bash
+      comment: ansible
+      password: PASS-HASH 
+
+  - name: copy ssh pubkey to home directory
+    authorized_key:
+      user: ansible
+      key: "{{ lookup('file', 'PATH_TO_KEY') }}"
+
+  - name: adding ansible user to sudoers
+    lineinfile:
+      dest: /etc/sudoers
+      line: "ansible ALL=(ALL)       NOPASSWD: ALL"
+      validate: 'visudo -cf %s'

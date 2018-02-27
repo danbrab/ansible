@@ -1,0 +1,2 @@
+[SERVER-GROUP]
+SERVER-NAME ansible_ssh_host=SERVER-IP
